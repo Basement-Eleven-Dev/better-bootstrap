@@ -16,12 +16,14 @@
   $active-color: color-contrast($active-background),
   $disabled-background: $background,
   $disabled-border: $border,
-  $disabled-color: color-contrast($disabled-background)
+  $disabled-color: color-contrast($disabled-background),
+  $text-color: if($color == $color-contrast-light, tint-color($background,$btn-text-color-tint-amount),shade-color($background, $btn-text-color-shade-amount)), //se il colore è chiaro, mischia di un certo amount il colore di sfondo con il bianco (tint) altrimenti col nero (shade)
+  $hover-text-color: if($hover-color == $color-contrast-light, tint-color($background,$btn-text-color-tint-amount),shade-color($background, $btn-text-color-shade-amount)) //se il colore è chiaro, mischia di un certo amount il colore di sfondo con il bianco (tint) altrimenti col nero (shade)
 ) {
-  --#{$prefix}btn-color: #{$color};
+  --#{$prefix}btn-color: #{$text-color};
   --#{$prefix}btn-bg: #{$background};
   --#{$prefix}btn-border-color: #{$border};
-  --#{$prefix}btn-hover-color: #{$hover-color};
+  --#{$prefix}btn-hover-color:#{$hover-text-color};
   --#{$prefix}btn-hover-bg: #{$hover-background};
   --#{$prefix}btn-hover-border-color: #{$hover-border};
   --#{$prefix}btn-focus-shadow-rgb: #{to-rgb(mix($color, $border, 15%))};
@@ -38,14 +40,15 @@
 // scss-docs-start btn-outline-variant-mixin
 @mixin button-outline-variant(
   $color,
-  $color-hover: color-contrast($color),
+  $color-contrast: color-contrast($color),
+  $hover-color: if($color-contrast == $color-contrast-light,tint-color($color,$btn-text-color-tint-amount),shade-color($color, $btn-text-color-shade-amount)),
   $active-background: $color,
   $active-border: $color,
   $active-color: color-contrast($active-background)
 ) {
   --#{$prefix}btn-color: #{$color};
   --#{$prefix}btn-border-color: #{$color};
-  --#{$prefix}btn-hover-color: #{$color-hover};
+  --#{$prefix}btn-hover-color: #{$hover-color};
   --#{$prefix}btn-hover-bg: #{$active-background};
   --#{$prefix}btn-hover-border-color: #{$active-border};
   --#{$prefix}btn-focus-shadow-rgb: #{to-rgb($color)};
